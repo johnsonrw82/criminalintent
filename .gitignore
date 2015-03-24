@@ -11,3 +11,4 @@ modules.xml
 /CriminalIntent/*.iml
 target
 /CriminalIntent-it/*.iml
+/.idea/uiDesigner.xml
