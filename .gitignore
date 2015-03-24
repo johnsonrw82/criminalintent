@@ -1,0 +1,13 @@
+/*.iml
+vcs.xml
+copyright
+libraries
+scopes
+.name
+compiler.xml
+encodings.xml
+misc.xml
+modules.xml
+/CriminalIntent/*.iml
+target
+/CriminalIntent-it/*.iml
