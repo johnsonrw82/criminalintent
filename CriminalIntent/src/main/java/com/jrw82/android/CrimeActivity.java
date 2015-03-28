@@ -2,10 +2,10 @@ package com.jrw82.android;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-public class CriminalIntentActivity extends Activity {
+public class CrimeActivity extends FragmentActivity {
 
     /**
      * Called when the activity is first created.
@@ -16,14 +16,7 @@ public class CriminalIntentActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-	// Inflate the menu; this adds items to the action bar if it is present.
-	getMenuInflater().inflate(R.menu.main, menu);
-	return true;
+        setContentView(R.layout.activity_crime);
     }
 
 }
