@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 
 public class CrimeActivity extends FragmentActivity {
+
+    private static final String TAG = "CrimeActivity";
 
     /**
      * Called when the activity is first created.
@@ -18,12 +21,15 @@ public class CrimeActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_crime);
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
         if ( fragment == null ) {
+            Log.d(TAG, "new fragment being created");
             fragment = new CrimeFragment();
             fm.beginTransaction()
                     .add(R.id.fragmentContainer, fragment)
