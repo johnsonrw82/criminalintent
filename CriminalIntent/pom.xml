@@ -27,6 +27,12 @@
             <artifactId>compatibility-v4</artifactId>
             <version>22.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.jrw82.android</groupId>
+            <artifactId>AndroidLibrary</artifactId>
+            <version>1.0.0</version>
+            <type>apklib</type>
+        </dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
