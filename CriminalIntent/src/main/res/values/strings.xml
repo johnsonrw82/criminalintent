@@ -8,4 +8,6 @@
     <string name="crime_solved_label">Solved?</string>
     <string name="crime_details_label">Details</string>
     <string name="crimes_title">List of Crimes</string>
+    <string name="crime_list_item_crimeTitle">Crime Title</string>
+    <string name="crime_list_item_crimeDate">Crime Date</string>
 </resources>

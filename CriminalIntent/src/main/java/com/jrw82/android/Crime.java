@@ -55,4 +55,9 @@ public class Crime implements Serializable {
     public CharSequence getDateAsString() {
         return DateFormat.format("EEEE, MMM dd, yyyy", getDate());
     }
+
+    @Override
+    public String toString() {
+        return mTitle;
+    }
 }
