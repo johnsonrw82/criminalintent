@@ -1,4 +1,4 @@
-package com.jrw82.android;
+package com.jrw82.android.criminalintent;
 
 import android.text.format.DateFormat;
 

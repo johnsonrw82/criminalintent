@@ -1,4 +1,4 @@
-package com.jrw82.android;
+package com.jrw82.android.criminalintent;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,18 +10,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import java.util.UUID;
+
 /**
  * Created by Ryan on 3/27/2015.
  */
 public class CrimeFragment extends Fragment {
     private static final String TAG = "CrimeFragment";
-    public static final String CRIME_KEY = "mCrimeKey";
+    public static final String CRIME_KEY = "com.jrw82.android.criminalintent.crime_key";
+    public static final String CRIME_ID_EXTRA = "com.jrw82.android.criminalintent.crime_id";
 
     private Crime mCrime;
 
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+
+
+    /**
+     * Static method that will be used to create a new crime fragment using a crime ID
+     * @param crimeId the UUID of the crime
+     * @return a CrimeFragment for the crime specified by crimeId
+     */
+    public static CrimeFragment newInstance(UUID crimeId) {
+        Bundle args = new Bundle();
+        args.putSerializable(CRIME_ID_EXTRA, crimeId);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +51,8 @@ public class CrimeFragment extends Fragment {
             mCrime = (Crime) savedInstanceState.getSerializable(CRIME_KEY);
         }
         else {
-            mCrime = new Crime();
+            UUID crimeId = (UUID) getArguments().getSerializable(CRIME_ID_EXTRA);
+            mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
         }
     }
 
@@ -58,10 +78,15 @@ public class CrimeFragment extends Fragment {
             }
         });
 
+        // update the title field to display what's already there
+        mTitleField.setText(mCrime.getTitle());
+
+        // display date
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         mDateButton.setText(mCrime.getDateAsString());
         mDateButton.setEnabled(false);
 
+        // set up checkbox
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -70,6 +95,9 @@ public class CrimeFragment extends Fragment {
                 mCrime.setSolved(isChecked);
             }
         });
+
+        // is crime solved/
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
 
         return v;
     }

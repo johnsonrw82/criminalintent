@@ -1,7 +1,7 @@
 package com.jrw82.android.test;
 
 import android.test.ActivityInstrumentationTestCase2;
-import com.jrw82.android.*;
+import com.jrw82.android.criminalintent.CrimeActivity;
 
 public class CrimeActivityTest extends ActivityInstrumentationTestCase2<CrimeActivity> {
 

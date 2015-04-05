@@ -1,5 +1,6 @@
-package com.jrw82.android;
+package com.jrw82.android.criminalintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -41,8 +42,21 @@ public class CrimeListFragment extends ListFragment {
         // cast the list adapter returned to the custom adapter, and get the item position
         // cast to Crime is not necessary, because CrimeAdapter extends the ArrayAdapter with type parameter Crime
         Crime c = ((CrimeAdapter)getListAdapter()).getItem(position);
-        Log.d(TAG, c.getTitle());
+        Log.d(TAG, c.getTitle() + " clicked");
+
+        // create a new Intent, that will be used to start the new activity
+        Intent i = new Intent(getActivity(), CrimeActivity.class);
+        // put the crime id as an extra
+        i.putExtra(CrimeFragment.CRIME_ID_EXTRA, c.getId());
+        startActivity(i);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
+    }
+
 
     private class CrimeAdapter extends ArrayAdapter<Crime> {
         public CrimeAdapter(ArrayList<Crime> crimes) {
