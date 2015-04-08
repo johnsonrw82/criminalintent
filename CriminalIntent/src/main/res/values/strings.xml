@@ -10,4 +10,5 @@
     <string name="crimes_title">List of Crimes</string>
     <string name="crime_list_item_crimeTitle">Crime Title</string>
     <string name="crime_list_item_crimeDate">Crime Date</string>
+    <string name="date_picker_title">Date of Crime:</string>
 </resources>

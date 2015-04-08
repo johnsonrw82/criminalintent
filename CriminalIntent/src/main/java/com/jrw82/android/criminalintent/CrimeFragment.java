@@ -1,7 +1,10 @@
 package com.jrw82.android.criminalintent;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -17,6 +21,9 @@ import java.util.UUID;
  */
 public class CrimeFragment extends Fragment {
     private static final String TAG = "CrimeFragment";
+    private static final String DIALOG_DATE = "date";
+    private static final int REQUEST_DATE = 0;
+
     public static final String CRIME_KEY = "com.jrw82.android.criminalintent.crime_key";
     public static final String CRIME_ID_EXTRA = "com.jrw82.android.criminalintent.crime_id";
 
@@ -83,23 +90,49 @@ public class CrimeFragment extends Fragment {
 
         // display date
         mDateButton = (Button) v.findViewById(R.id.crime_date);
-        mDateButton.setText(mCrime.getDateAsString());
-        mDateButton.setEnabled(false);
+        updateDate();   // update the button with the date info
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE); // set this fragment as the target for the created fragment
+                dialog.show(fm, DIALOG_DATE);  // show the dialog
+            }
+        });
 
         // set up checkbox
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // set the crime's solved property
                 mCrime.setSolved(isChecked);
             }
         });
+
 
         // is crime solved/
         mSolvedCheckBox.setChecked(mCrime.isSolved());
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if ( resultCode == Activity.RESULT_OK) {
+            if ( requestCode == REQUEST_DATE ) {
+                // get the date from the intent
+                Date d = (Date)intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+                // set the crime's date
+                mCrime.setDate(d);
+                // update the date display
+                updateDate();
+            }
+        }
+    }
+
+    private void updateDate() {
+        mDateButton.setText(mCrime.getDateAsString());
     }
 
     @Override
