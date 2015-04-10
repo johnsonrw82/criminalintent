@@ -55,6 +55,10 @@ public class Crime implements Serializable {
     public CharSequence getDateAsString() {
         return DateFormat.format("EEEE, MMM dd, yyyy", getDate());
     }
+    // return crime's date in "Day of Week, Month day, year" format
+    public CharSequence getTimeAsString() {
+        return DateFormat.format("h:mm a", getDate());
+    }
 
     @Override
     public String toString() {

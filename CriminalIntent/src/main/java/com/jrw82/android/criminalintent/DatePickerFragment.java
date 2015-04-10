@@ -20,9 +20,9 @@ import java.util.GregorianCalendar;
 public class DatePickerFragment extends DialogFragment {
     public static final String EXTRA_DATE = "com.jrw82.android.criminalintent.date";
 
-    private Date mDate;
+    protected Date mDate;
 
-    private void sendResult(int resultCode) {
+    protected void sendResult(int resultCode) {
         if ( getTargetFragment() != null ) {
             Intent i = new Intent();
             i.putExtra(EXTRA_DATE, mDate);
@@ -41,7 +41,7 @@ public class DatePickerFragment extends DialogFragment {
         mDate = (Date) args.getSerializable(EXTRA_DATE);
 
         // create a calendar and initialize it using specified date
-        Calendar c = Calendar.getInstance();
+        final Calendar c = Calendar.getInstance();
         c.setTime(mDate);
 
         // integer components making up the date
@@ -54,7 +54,8 @@ public class DatePickerFragment extends DialogFragment {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // create a new date using values passed in to the method
-                mDate = new GregorianCalendar(year, monthOfYear, dayOfMonth).getTime();
+                mDate = new GregorianCalendar(year, monthOfYear, dayOfMonth,
+                        c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), 0).getTime();
 
                 // add new date to the arguments to preserve on rotation
                 getArguments().putSerializable(EXTRA_DATE, mDate);
