@@ -12,4 +12,7 @@
     <string name="crime_list_item_crimeDate">Crime Date</string>
     <string name="date_picker_title">Date of Crime:</string>
     <string name="time_picker_title">Time of Crime:</string>
+    <string name="dialog_choice_date">Set Date</string>
+    <string name="dialog_choice_time">Set Time</string>
+    <string name="dialog_choice_title">Set Date or Time?</string>
 </resources>
