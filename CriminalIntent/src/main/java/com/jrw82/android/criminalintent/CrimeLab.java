@@ -16,15 +16,7 @@ public class CrimeLab {
 
     private CrimeLab(Context context) {
         this.mAppContext = context;
-        this.mCrimes = new ArrayList<Crime>();
-        for ( int i = 0 ; i < 100; i++ ) {
-            Crime c = new Crime();
-            int num = i+1;
-            c.setTitle("Crime #" + num);
-            c.setSolved(i % 2 == 0);
-            mCrimes.add(c);
-        }
-
+        this.mCrimes = new ArrayList<>();
     }
 
     public static CrimeLab get(Context context) {
@@ -46,5 +38,13 @@ public class CrimeLab {
         }
 
         return null;
+    }
+
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
+    }
+
+    public void deleteCrime(Crime c) {
+        mCrimes.remove(c);
     }
 }

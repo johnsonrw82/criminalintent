@@ -1,18 +1,24 @@
 package com.jrw82.android.criminalintent;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
 import java.util.UUID;
@@ -59,6 +65,9 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
 
+        // tell the fragment manager that the options menu is enabled
+        setHasOptionsMenu(true);
+
         if ( savedInstanceState != null ) {
             mCrime = (Crime) savedInstanceState.getSerializable(CRIME_KEY);
         }
@@ -68,10 +77,20 @@ public class CrimeFragment extends Fragment {
         }
     }
 
+    @TargetApi(11)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView(LayoutInflater, ViewGroup, Bundle) called");
         View v = inflater.inflate(R.layout.fragment_crime, parent, false);
+
+        // enable the home button as up (only for honeycomb or higher)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+            // check for a parent activity first
+            if (NavUtils.getParentActivityName(getActivity())!= null ) {
+                getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        }
+
         mTitleField = (EditText)v.findViewById(R.id.crimeTitle);
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -122,6 +141,21 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                // if there is an activity identified as the parent, use it to navigate up the stack
+                if (NavUtils.getParentActivityName(getActivity()) != null ) {
+                    NavUtils.navigateUpFromSameTask(getActivity());
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if ( resultCode == Activity.RESULT_OK) {
@@ -161,4 +195,5 @@ public class CrimeFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(CRIME_KEY, mCrime);
     }
+
 }

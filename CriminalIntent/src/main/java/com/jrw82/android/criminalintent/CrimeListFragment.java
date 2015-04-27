@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -24,6 +23,9 @@ public class CrimeListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // tell the fragment manager that this fragment has an options menu
+        setHasOptionsMenu(true);
+
         // set the title of the activity
         getActivity().setTitle(R.string.crimes_title);
         // get the crimes from the crime lab
@@ -55,6 +57,32 @@ public class CrimeListFragment extends ListFragment {
     public void onResume() {
         super.onResume();
         ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            // menu item for new crime
+            case R.id.menu_item_new_crime:
+                // create crime
+                Crime crime = new Crime();
+                // get crime lab instance
+                CrimeLab.get(getActivity()).addCrime(crime);
+                // create a new intent
+                Intent i = new Intent(getActivity(), CrimePagerActivity.class);
+                // start the activity
+                startActivityForResult(i, 0);
+                return true;
+            // call superclass implementation if the id is not found
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
     }
 
 
