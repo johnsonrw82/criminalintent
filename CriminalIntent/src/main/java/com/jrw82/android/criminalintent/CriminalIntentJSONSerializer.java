@@ -1,6 +1,7 @@
 package com.jrw82.android.criminalintent;
 
 import android.content.Context;
+import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
  * Created by johnsonrw82 on 4/28/2015.
  */
 public class CriminalIntentJSONSerializer {
+    private static String TAG = "CriminalIntentJSONSerializer";
+
     private Context mContext;
     private String mFilename;
 
@@ -30,7 +33,17 @@ public class CriminalIntentJSONSerializer {
         // write the file to disk
         Writer writer = null;
         try {
-            OutputStream out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
+            OutputStream out;
+            if ( StorageManager.getInstance(mContext).isUsingExternalStorage() && StorageManager.getInstance(mContext).isExternalStorageAvailable() ) {
+                Log.d(TAG, "Saving to external storage");
+                File extFile = new File(mContext.getExternalFilesDir(null), mFilename);
+                out = new FileOutputStream(extFile);
+            }
+            else {
+                Log.d(TAG, "Saving to device storage");
+                out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
+            }
+
             writer = new OutputStreamWriter(out);
             writer.write(array.toString());
         }
@@ -46,7 +59,18 @@ public class CriminalIntentJSONSerializer {
         BufferedReader reader = null;
         try {
             // open the file and read from it
-            InputStream in = mContext.openFileInput(mFilename);
+
+            InputStream in;
+            if ( StorageManager.getInstance(mContext).isUsingExternalStorage() && StorageManager.getInstance(mContext).isExternalStorageAvailable() ) {
+                Log.d(TAG, "Loading from external storage");
+                File extFile = new File(mContext.getExternalFilesDir(null), mFilename);
+                in = new FileInputStream(extFile);
+            }
+            else {
+                Log.d(TAG, "Loading from device storage");
+                in = mContext.openFileInput(mFilename);
+            }
+
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;

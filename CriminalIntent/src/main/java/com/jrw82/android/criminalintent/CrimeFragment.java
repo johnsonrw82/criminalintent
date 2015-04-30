@@ -17,9 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Date;
 import java.util.UUID;
 
@@ -119,7 +116,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getFragmentManager();
-                DialogChoiceFragment dialog = new DialogChoiceFragment();
+                DateTimeDialogChoiceFragment dialog = new DateTimeDialogChoiceFragment();
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_CHOICE); // set this fragment as the target for the created fragment
                 dialog.show(fm, DIALOG_CHOICE);  // show the dialog
             }
@@ -168,7 +165,7 @@ public class CrimeFragment extends Fragment {
                 updateDate();
             }
             if ( requestCode == REQUEST_CHOICE ) {
-                boolean setDate = intent.getBooleanExtra(DialogChoiceFragment.EXTRA_CHOICE, true);
+                boolean setDate = intent.getBooleanExtra(DateTimeDialogChoiceFragment.EXTRA_CHOICE, true);
 
                 // determine which fragment to show
                 if ( setDate ) {

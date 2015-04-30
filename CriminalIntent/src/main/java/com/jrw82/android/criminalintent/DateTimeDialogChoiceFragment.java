@@ -12,8 +12,8 @@ import android.widget.Button;
 /**
  * Created by johnsonrw82 on 4/9/2015.
  */
-public class DialogChoiceFragment extends DialogFragment {
-    public static final String EXTRA_CHOICE = "com.jrw82.android.criminalintent.dialog_choice";
+public class DateTimeDialogChoiceFragment extends DialogFragment {
+    public static final String EXTRA_CHOICE = "com.jrw82.android.criminalintent.datetime_dialog_choice";
 
     boolean setDate = true;
 
@@ -31,10 +31,10 @@ public class DialogChoiceFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_choice, null);
+        View v = getActivity().getLayoutInflater().inflate(R.layout.datetime_dialog_choice, null);
 
-        Button mChooseDate = (Button) v.findViewById(R.id.dialog_choice_date);
-        Button mChooseTime = (Button) v.findViewById(R.id.dialog_choice_time);
+        Button mChooseDate = (Button) v.findViewById(R.id.datetime_dialog_choice_date);
+        Button mChooseTime = (Button) v.findViewById(R.id.datetime_dialog_choice_time);
 
         mChooseDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,7 @@ public class DialogChoiceFragment extends DialogFragment {
         });
 
         return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.dialog_choice_title)
+                .setTitle(R.string.datetime_dialog_choice_title)
                 .setView(v)
                 .create();
     }

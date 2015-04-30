@@ -7,4 +7,7 @@
     <item android:id="@+id/menu_item_show_subtitle"
           android:title="@string/show_subtitle"
           android:showAsAction="ifRoom"/>
+    <item android:id="@+id/menu_item_choose_storage"
+          android:title="@string/choose_storage"
+          android:showAsAction="ifRoom"/>
 </menu>

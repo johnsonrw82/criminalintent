@@ -1,9 +1,11 @@
 package com.jrw82.android.criminalintent;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.*;
@@ -16,6 +18,10 @@ import java.util.ArrayList;
  */
 public class CrimeListFragment extends ListFragment {
     private static final String TAG = "CrimeListFragment";
+    private static final String DIALOG_STORAGE_CHOICE = "storage_choice";
+
+    private static final int REQUEST_STORAGE = 0;
+
     private boolean mSubtitleVisible;
 
     private ArrayList<Crime> mCrimes;
@@ -23,6 +29,10 @@ public class CrimeListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // register receiver for external storage state
+        StorageManager.getInstance(getActivity()).startWatchingExternalStorage();
+
         // tell the fragment manager that this fragment has an options menu
         setHasOptionsMenu(true);
 
@@ -43,11 +53,29 @@ public class CrimeListFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // stop watching external storage
+        StorageManager.getInstance(getActivity()).stopWatchingExternalStorage();
+    }
+
     @TargetApi(11)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState ) {
         // inflate our own view, that specifies the list view and the empty view
         View v = inflater.inflate(R.layout.fragment_crime_list, viewGroup, false);
+
+        // restore options state
+        if ( savedInstanceState != null ) {
+            if ( savedInstanceState.getBoolean(StorageManager.STORAGE_SELECTION_KEY, true) ) {
+                StorageManager.getInstance(getActivity()).setUsingDeviceStorage();
+            }
+            else {
+                StorageManager.getInstance(getActivity()).setUsingExternalStorage();
+            }
+        }
 
         // set click listener for the button
         Button newCrimeButton = (Button) v.findViewById(R.id.empty_list_add_new_crime_button);
@@ -89,6 +117,14 @@ public class CrimeListFragment extends ListFragment {
         ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState(Bundle) called");
+        outState.putBoolean(StorageManager.STORAGE_SELECTION_KEY, StorageManager.getInstance(getActivity()).isUsingDeviceStorage());
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -98,7 +134,20 @@ public class CrimeListFragment extends ListFragment {
         if ( mSubtitleVisible && showSubtitle != null ) {
             showSubtitle.setTitle(R.string.hide_subtitle);
         }
+
+        MenuItem chooseStorage = menu.findItem(R.id.menu_item_choose_storage);
+        chooseStorage.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // launch dialog
+                FragmentManager fm = getFragmentManager();
+                StorageDialogChoiceFragment dialog = new StorageDialogChoiceFragment();
+                dialog.show(fm, DIALOG_STORAGE_CHOICE);
+                return true;
+            }
+        });
     }
+
 
     @TargetApi(11)
     @Override
@@ -121,6 +170,9 @@ public class CrimeListFragment extends ListFragment {
                     menuItem.setTitle(R.string.show_subtitle);
                 }
                 return true;
+            case R.id.menu_item_choose_storage:
+                // launch activity to display dialog
+
 
             // call superclass implementation if the id is not found
             default:

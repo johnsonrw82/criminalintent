@@ -1,5 +1,6 @@
 package com.jrw82.android.criminalintent;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import com.jrw82.android.lib.SingleFragmentActivity;
@@ -16,5 +17,17 @@ public class CrimeListActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         Log.d(TAG, "createFragment called");
         return new CrimeListFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() called");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
     }
 }
