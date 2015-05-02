@@ -166,10 +166,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60dda067-d8f4-4cb0-8685-a8c82196b80d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CriminalIntent/src/main/res/drawable/background_activated.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_list_item_context.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeListFragment.java" afterPath="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeListFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CriminalIntent/src/main/res/layout/crime_list_item.xml" afterPath="$PROJECT_DIR$/CriminalIntent/src/main/res/layout/crime_list_item.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_fragment.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java" afterPath="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CriminalIntent.iws" />
@@ -215,31 +213,45 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="crime_list_item.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="crime_list_item.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/layout/crime_list_item.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.07934656">
+            <state vertical-scroll-proportion="-2.3448277">
               <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_crime_list.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/layout/fragment_crime_list.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="crime_fragment.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_fragment.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.4827585">
-              <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
-              <folding>
-                <element signature="e#914#942#0" expanded="false" />
-                <element signature="e#1235#1254#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.057562076">
+              <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fragment_crime_list.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/fragment_crime_list.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CrimeFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="167" column="22" selection-start-line="167" selection-start-column="22" selection-end-line="167" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -258,48 +270,9 @@
         <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_list_item_context.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+              <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="50" />
               <folding>
                 <element signature="e#238#260#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CrimeFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-              <folding>
-                <element signature="e#4763#4764#0" expanded="false" />
-                <element signature="e#4822#4823#0" expanded="false" />
-                <element signature="e#7250#7251#0" expanded="false" />
-                <element signature="e#7311#7312#0" expanded="false" />
-                <element signature="e#7381#7382#0" expanded="false" />
-                <element signature="e#7440#7441#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StorageManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/StorageManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="58" column="9" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CriminalIntentJSONSerializer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CriminalIntentJSONSerializer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -381,7 +354,6 @@
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/res/menu-v11/fragment_crime_list.xml" />
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/StorageDialogChoiceFragment.java" />
-        <option value="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java" />
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/StorageManager.java" />
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CriminalIntentJSONSerializer.java" />
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeListActivity.java" />
@@ -391,6 +363,8 @@
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeListFragment.java" />
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/res/drawable/background_activated.xml" />
         <option value="$PROJECT_DIR$/CriminalIntent/src/main/res/layout/crime_list_item.xml" />
+        <option value="$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_fragment.xml" />
+        <option value="$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java" />
       </list>
     </option>
   </component>
@@ -472,6 +446,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -764,8 +740,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -784,8 +758,8 @@
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="226" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="GalaxyNexus" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="GalaxyNexus_API-21" />
     <property name="options.lastSelected" value="vcs.Git" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -1120,7 +1094,13 @@
       <option name="project" value="LOCAL" />
       <updated>1430368894868</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Added a floating and multi-choice context menu for deleting crimes.&#10;Added a state select list item for handling background color of items selected in multi-choice mode.">
+      <created>1430452673020</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1430452673020</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1141,7 +1121,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32843497" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2662957" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2662957" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1213,7 +1193,8 @@
     <MESSAGE value="Added a new layout that specifies an empty view for the list adapter" />
     <MESSAGE value="Added save/load feature using JSON format to private storage area" />
     <MESSAGE value="Added an options menu that allows the user to select between external and device storage&#10;Implemented a StorageManager for handling calls to the API re: ability to write to the specified storage." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added an options menu that allows the user to select between external and device storage&#10;Implemented a StorageManager for handling calls to the API re: ability to write to the specified storage." />
+    <MESSAGE value="Added a floating and multi-choice context menu for deleting crimes.&#10;Added a state select list item for handling background color of items selected in multi-choice mode." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a floating and multi-choice context menu for deleting crimes.&#10;Added a state select list item for handling background color of items selected in multi-choice mode." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1226,14 +1207,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeLab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1532,23 +1505,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#1680#1681#0" expanded="false" />
-            <element signature="e#1759#1760#0" expanded="false" />
-            <element signature="e#1910#1911#0" expanded="false" />
-            <element signature="e#1991#1992#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/fragment_crime_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17268623">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding>
-            <element signature="e#232#251#0" expanded="false" />
-            <element signature="e#380#404#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1579,28 +1535,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-          <folding>
-            <element signature="e#4763#4764#0" expanded="false" />
-            <element signature="e#4822#4823#0" expanded="false" />
-            <element signature="e#7250#7251#0" expanded="false" />
-            <element signature="e#7311#7312#0" expanded="false" />
-            <element signature="e#7381#7382#0" expanded="false" />
-            <element signature="e#7440#7441#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CriminalIntentJSONSerializer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1612,42 +1551,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_list_item_context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
-          <folding>
-            <element signature="e#238#260#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/layout/fragment_crime_list.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.4827585">
-          <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
-          <folding>
-            <element signature="e#914#942#0" expanded="false" />
-            <element signature="e#1235#1254#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeLab.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1665,8 +1572,61 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07934656">
+        <state vertical-scroll-proportion="-2.3448277">
           <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/layout/fragment_crime_list.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4562427">
+          <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/fragment_crime_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_list_item_context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="50" />
+          <folding>
+            <element signature="e#238#260#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/java/com/jrw82/android/criminalintent/CrimeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="167" column="22" selection-start-line="167" selection-start-column="22" selection-end-line="167" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CriminalIntent/src/main/res/menu/crime_fragment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.057562076">
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
           <folding />
         </state>
       </provider>

@@ -11,10 +11,7 @@ import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 
 import java.util.Date;
@@ -140,13 +137,23 @@ public class CrimeFragment extends Fragment {
 
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.crime_fragment,menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 // if there is an activity identified as the parent, use it to navigate up the stack
-                if (NavUtils.getParentActivityName(getActivity()) != null ) {
-                    NavUtils.navigateUpFromSameTask(getActivity());
-                }
+                navigateUp();
+                return true;
+            case R.id.menu_item_delete_crime:
+                // delete the crime from crimelab
+                CrimeLab.get(getActivity()).deleteCrime(mCrime);
+                // navigate up to the previous activity
+                navigateUp();
                 return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
@@ -181,6 +188,12 @@ public class CrimeFragment extends Fragment {
                     dialog.show(fm, DIALOG_TIME);  // show the dialog
                 }
             }
+        }
+    }
+
+    private void navigateUp() {
+        if (NavUtils.getParentActivityName(getActivity()) != null ) {
+            NavUtils.navigateUpFromSameTask(getActivity());
         }
     }
 
