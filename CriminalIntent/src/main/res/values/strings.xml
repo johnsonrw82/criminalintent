@@ -25,4 +25,5 @@
     <string name="delete_crime">Delete</string>
     <string name="empty_list_message">There are no crimes in the list</string>
     <string name="choose_storage">Choose Storage Type</string>
+    <string name="take">Take!</string>
 </resources>

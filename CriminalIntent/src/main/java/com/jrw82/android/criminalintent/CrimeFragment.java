@@ -3,6 +3,8 @@ package com.jrw82.android.criminalintent;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -106,6 +108,22 @@ public class CrimeFragment extends Fragment {
         // update the title field to display what's already there
         mTitleField.setText(mCrime.getTitle());
 
+        // image button
+        ImageButton imageButton = (ImageButton) v.findViewById(R.id.crime_imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CrimeCameraActivity.class);
+                startActivity(i);
+            }
+        });
+        PackageManager pm = getActivity().getPackageManager();
+        boolean hasCamera = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) || pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT) ||
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Camera.getNumberOfCameras() > 0 );
+        if ( !hasCamera ) {
+            imageButton.setEnabled(false);
+        }
+
         // display date
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         updateDate();   // update the button with the date info
@@ -139,7 +157,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.crime_fragment,menu);
+        inflater.inflate(R.menu.crime_fragment, menu);
     }
 
     @Override
@@ -194,6 +212,9 @@ public class CrimeFragment extends Fragment {
     private void navigateUp() {
         if (NavUtils.getParentActivityName(getActivity()) != null ) {
             NavUtils.navigateUpFromSameTask(getActivity());
+        }
+        else {
+            getActivity().finish();
         }
     }
 
