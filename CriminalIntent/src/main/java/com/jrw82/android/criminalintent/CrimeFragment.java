@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private ImageView mPhotoView;
 
 
     /**
@@ -122,9 +124,12 @@ public class CrimeFragment extends Fragment {
         boolean hasCamera = Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD ? Camera.getNumberOfCameras() > 0 :
                 pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) || pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT);
 
+        // if there is no camera, disable the button
         if ( !hasCamera ) {
             imageButton.setEnabled(false);
         }
+
+        mPhotoView = (ImageView) v.findViewById(R.id.crime_imageView);
 
         // display date
         mDateButton = (Button) v.findViewById(R.id.crime_date);
@@ -213,7 +218,10 @@ public class CrimeFragment extends Fragment {
                 // create a new photo object and attach it to the crime
                 String fileName = intent.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
                 if ( fileName != null ) {
-                    Log.i(TAG, "Photo filename: " + fileName);
+                    Photo photo = new Photo(fileName);
+                    mCrime.setPhoto(photo);
+                    showPhoto();
+                    Log.i(TAG, "Crime: " + mCrime.getTitle() + " has a photo");
                 }
             }
         }
@@ -228,10 +236,33 @@ public class CrimeFragment extends Fragment {
         }
     }
 
+    private void showPhoto() {
+        // (re)set the image button's image based on our photo
+        Photo p = mCrime.getPhoto();
+        BitmapDrawable drawable = null;
+        if ( p != null ) {
+            String path = getActivity().getFileStreamPath(p.getFileName()).getAbsolutePath();
+            drawable = PictureUtils.getScaledDrawable(getActivity(), path);
+        }
+        mPhotoView.setImageDrawable(drawable);
+    }
+
     @Override
     public void onPause() {
         super.onPause();
         CrimeLab.get(getActivity()).saveCrimes();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showPhoto();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        PictureUtils.cleanImageView(mPhotoView);
     }
 
     private void updateDate() {
