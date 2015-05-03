@@ -30,6 +30,7 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_TIME = 1;
     private static final int REQUEST_CHOICE = 2;
+    private static final int REQUEST_PHOTO = 3;
 
     public static final String CRIME_KEY = "com.jrw82.android.criminalintent.crime_key";
     public static final String CRIME_ID_EXTRA = "com.jrw82.android.criminalintent.crime_id";
@@ -114,7 +115,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), CrimeCameraActivity.class);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_PHOTO);
             }
         });
         PackageManager pm = getActivity().getPackageManager();
@@ -205,6 +206,14 @@ public class CrimeFragment extends Fragment {
                     TimePickerFragment dialog = TimePickerFragment.newInstance(mCrime.getDate());
                     dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME); // set this fragment as the target for the created fragment
                     dialog.show(fm, DIALOG_TIME);  // show the dialog
+                }
+            }
+            // if there was a picture taken
+            if ( requestCode == REQUEST_PHOTO ) {
+                // create a new photo object and attach it to the crime
+                String fileName = intent.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
+                if ( fileName != null ) {
+                    Log.i(TAG, "Photo filename: " + fileName);
                 }
             }
         }
