@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,10 +27,12 @@ public class CrimeCameraFragment extends Fragment {
     private static String TAG = "CrimeCameraFragment";
 
     public static final String EXTRA_PHOTO_FILENAME = "com.jrw82.android.criminalintent.extra_photo_filename";
+    public static final String EXTRA_PHOTO_ROTATION = "com.jrw82.android.criminalintent.extra_photo_rotation";
 
     private Camera mCamera;
     private SurfaceView mSurfaceView;
     private View mProgressContainer;
+    private int mRotation;
 
     private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
         @Override
@@ -83,7 +86,8 @@ public class CrimeCameraFragment extends Fragment {
             if ( success ) {
                 Log.i(TAG, "JPEG saved at filename: " + fileName);
                 Intent i = new Intent();
-                i.putExtra(EXTRA_PHOTO_FILENAME, fileName);
+                i.putExtra(EXTRA_PHOTO_FILENAME, fileName);  // store filename
+                i.putExtra(EXTRA_PHOTO_ROTATION, mRotation);  // store rotation value
                 getActivity().setResult(Activity.RESULT_OK, i);
             }
             else {
@@ -140,6 +144,24 @@ public class CrimeCameraFragment extends Fragment {
                     // set picture size
                     s = getBestSupportedSize(parameters.getSupportedPictureSizes(), width, height);
                     parameters.setPictureSize(s.width, s.height);
+
+                    // set orientation when surface changes
+                    mRotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+                    switch ( mRotation ) {
+                        case Surface.ROTATION_0:
+                            mCamera.setDisplayOrientation(90);
+                            break;
+                        case Surface.ROTATION_90:
+                            mCamera.setDisplayOrientation(0);
+                            break;
+                        case Surface.ROTATION_180:
+                            mCamera.setDisplayOrientation(270);
+                            break;
+                        case Surface.ROTATION_270:
+                            mCamera.setDisplayOrientation(180);
+                            break;
+                    }
+
                     mCamera.setParameters(parameters);
                     try {
                         mCamera.startPreview();
@@ -158,7 +180,7 @@ public class CrimeCameraFragment extends Fragment {
             }
         });
 
-        // make the progess bar container invisible
+        // make the progress bar container invisible
         mProgressContainer = v.findViewById(R.id.crime_camera_progressContainer);
         mProgressContainer.setVisibility(View.INVISIBLE);
 

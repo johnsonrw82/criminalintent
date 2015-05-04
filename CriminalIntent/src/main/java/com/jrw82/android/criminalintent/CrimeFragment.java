@@ -28,12 +28,12 @@ public class CrimeFragment extends Fragment {
     private static final String DIALOG_DATE = "date";
     private static final String DIALOG_TIME = "time";
     private static final String DIALOG_CHOICE = "choice";
+    private static final String DIALOG_IMAGE = "image";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_TIME = 1;
     private static final int REQUEST_CHOICE = 2;
     private static final int REQUEST_PHOTO = 3;
 
-    public static final String CRIME_KEY = "com.jrw82.android.criminalintent.crime_key";
     public static final String CRIME_ID_EXTRA = "com.jrw82.android.criminalintent.crime_id";
 
     private Crime mCrime;
@@ -67,13 +67,9 @@ public class CrimeFragment extends Fragment {
         // tell the fragment manager that the options menu is enabled
         setHasOptionsMenu(true);
 
-        if ( savedInstanceState != null ) {
-            mCrime = (Crime) savedInstanceState.getSerializable(CRIME_KEY);
-        }
-        else {
-            UUID crimeId = (UUID) getArguments().getSerializable(CRIME_ID_EXTRA);
-            mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-        }
+        UUID crimeId = (UUID) getArguments().getSerializable(CRIME_ID_EXTRA);
+        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+
     }
 
     @TargetApi(11)
@@ -130,6 +126,19 @@ public class CrimeFragment extends Fragment {
         }
 
         mPhotoView = (ImageView) v.findViewById(R.id.crime_imageView);
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Photo p = mCrime.getPhoto();
+                if ( p != null ) {
+                    // show the image in a dialog view
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    String path = getActivity().getFileStreamPath(p.getFileName()).getAbsolutePath();
+                    // create new instance of the photo fragment, using photo path and orientation
+                    ImageFragment.newInstance(path, p.getRotation()).show(fm,DIALOG_IMAGE);
+                }
+            }
+        });
 
         // display date
         mDateButton = (Button) v.findViewById(R.id.crime_date);
@@ -217,8 +226,9 @@ public class CrimeFragment extends Fragment {
             if ( requestCode == REQUEST_PHOTO ) {
                 // create a new photo object and attach it to the crime
                 String fileName = intent.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
+                int rotation = intent.getIntExtra(CrimeCameraFragment.EXTRA_PHOTO_ROTATION, Surface.ROTATION_90);
                 if ( fileName != null ) {
-                    Photo photo = new Photo(fileName);
+                    Photo photo = new Photo(fileName, rotation);
                     mCrime.setPhoto(photo);
                     showPhoto();
                     Log.i(TAG, "Crime: " + mCrime.getTitle() + " has a photo");
@@ -242,7 +252,8 @@ public class CrimeFragment extends Fragment {
         BitmapDrawable drawable = null;
         if ( p != null ) {
             String path = getActivity().getFileStreamPath(p.getFileName()).getAbsolutePath();
-            drawable = PictureUtils.getScaledDrawable(getActivity(), path);
+            int rotation = p.getRotation();
+            drawable = PictureUtils.getScaledDrawable(getActivity(), path, rotation);
         }
         mPhotoView.setImageDrawable(drawable);
     }
@@ -267,11 +278,6 @@ public class CrimeFragment extends Fragment {
 
     private void updateDate() {
         mDateButton.setText(mCrime.getDateAsString());
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(CRIME_KEY, mCrime);
     }
 
 }

@@ -11,14 +11,13 @@ import java.util.UUID;
 /**
  * Created by Ryan on 3/27/2015.
  */
-public class Crime implements Serializable {
+public class Crime {
     private static final String JSON_ID = "id";
     private static final String JSON_TITLE = "title";
     private static final String JSON_SOLVED = "solved";
     private static final String JSON_DATE = "date";
     private static final String JSON_PHOTO = "photo";
 
-    private static final long serialVersionUID = 1234L;
     private UUID mId;
     private String mTitle;
     private Date mDate;
