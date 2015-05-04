@@ -2,6 +2,8 @@ package com.jrw82.android.criminalintent;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
@@ -44,6 +46,17 @@ public class CrimeFragment extends Fragment {
     private ImageView mPhotoView;
 
 
+    private DialogInterface.OnClickListener mDeletePhotoDialogListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch(which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    deletePhoto();
+                    break;
+            }
+        }
+    };
+
     /**
      * Static method that will be used to create a new crime fragment using a crime ID
      * @param crimeId the UUID of the crime
@@ -79,14 +92,14 @@ public class CrimeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_crime, parent, false);
 
         // enable the home button as up (only for honeycomb or higher)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // check for a parent activity first
-            if (NavUtils.getParentActivityName(getActivity())!= null ) {
+            if (NavUtils.getParentActivityName(getActivity()) != null) {
                 getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
             }
         }
 
-        mTitleField = (EditText)v.findViewById(R.id.crimeTitle);
+        mTitleField = (EditText) v.findViewById(R.id.crimeTitle);
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,7 +134,7 @@ public class CrimeFragment extends Fragment {
                 pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) || pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT);
 
         // if there is no camera, disable the button
-        if ( !hasCamera ) {
+        if (!hasCamera) {
             imageButton.setEnabled(false);
         }
 
@@ -130,15 +143,62 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Photo p = mCrime.getPhoto();
-                if ( p != null ) {
+                if (p != null) {
                     // show the image in a dialog view
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     String path = getActivity().getFileStreamPath(p.getFileName()).getAbsolutePath();
                     // create new instance of the photo fragment, using photo path and orientation
-                    ImageFragment.newInstance(path, p.getRotation()).show(fm,DIALOG_IMAGE);
+                    ImageFragment.newInstance(path, p.getRotation()).show(fm, DIALOG_IMAGE);
                 }
             }
         });
+        // attach context menu to the thumbnail
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            registerForContextMenu(mPhotoView);
+        }
+        else {
+            mPhotoView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if ( mPhotoView.getDrawable() != null ) {
+                        getActivity().startActionMode(new ActionMode.Callback() {
+                            @Override
+                            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                                mode.getMenuInflater().inflate(R.menu.crime_fragment_context, menu);
+                                return true;
+                            }
+
+                            @Override
+                            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                                if (item.getItemId() == R.id.menu_item_delete_photo) {
+                                    // ask the user if they want to delete the photo
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setTitle(R.string.delete_photo_title)
+                                            .setMessage(R.string.delete_photo_text)
+                                            .setPositiveButton("Yes", mDeletePhotoDialogListener)
+                                            .setNegativeButton("No", mDeletePhotoDialogListener)
+                                            .show();
+                                }
+                                mode.finish();
+                                return true;
+                            }
+
+                            @Override
+                            public void onDestroyActionMode(ActionMode mode) {
+
+                            }
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
 
         // display date
         mDateButton = (Button) v.findViewById(R.id.crime_date);
@@ -169,6 +229,10 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo info) {
+        getActivity().getMenuInflater().inflate(R.menu.crime_fragment_context, menu);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -210,13 +274,13 @@ public class CrimeFragment extends Fragment {
 
                 // determine which fragment to show
                 if ( setDate ) {
-                    FragmentManager fm = getFragmentManager();
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
                     DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
                     dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE); // set this fragment as the target for the created fragment
                     dialog.show(fm, DIALOG_DATE);  // show the dialog
                 }
                 else {
-                    FragmentManager fm = getFragmentManager();
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
                     TimePickerFragment dialog = TimePickerFragment.newInstance(mCrime.getDate());
                     dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME); // set this fragment as the target for the created fragment
                     dialog.show(fm, DIALOG_TIME);  // show the dialog
@@ -228,6 +292,9 @@ public class CrimeFragment extends Fragment {
                 String fileName = intent.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
                 int rotation = intent.getIntExtra(CrimeCameraFragment.EXTRA_PHOTO_ROTATION, Surface.ROTATION_90);
                 if ( fileName != null ) {
+                    // get old crime photo if any and delete it
+                    deletePhoto();
+
                     Photo photo = new Photo(fileName, rotation);
                     mCrime.setPhoto(photo);
                     showPhoto();
@@ -256,6 +323,15 @@ public class CrimeFragment extends Fragment {
             drawable = PictureUtils.getScaledDrawable(getActivity(), path, rotation);
         }
         mPhotoView.setImageDrawable(drawable);
+    }
+
+    private void deletePhoto() {
+        Photo oldPhoto = mCrime.getPhoto();
+        if ( oldPhoto != null ) {
+            getActivity().getFileStreamPath(oldPhoto.getFileName()).delete();
+            mCrime.setPhoto(null);
+            mPhotoView.setImageDrawable(null);
+        }
     }
 
     @Override
