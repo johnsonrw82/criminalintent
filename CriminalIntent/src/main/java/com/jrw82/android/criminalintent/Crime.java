@@ -17,14 +17,15 @@ public class Crime {
     private static final String JSON_SOLVED = "solved";
     private static final String JSON_DATE = "date";
     private static final String JSON_PHOTO = "photo";
-    private static final String JSON_SUSPECT = "suspect";
+    private static final String JSON_SUSPECT = "suspect_object";
+
 
     private UUID mId;
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
     private Photo mPhoto;
-    private String mSuspect;
+    private Suspect mSuspect;
 
     public Crime() {
         // generate a UUID
@@ -43,7 +44,7 @@ public class Crime {
                 mPhoto = new Photo(jsonObject.getJSONObject(JSON_PHOTO));
             }
             if ( jsonObject.has(JSON_SUSPECT) ) {
-                mSuspect = jsonObject.getString(JSON_SUSPECT);
+                mSuspect = new Suspect(jsonObject.getJSONObject(JSON_SUSPECT));
             }
             mSolved = jsonObject.getBoolean(JSON_SOLVED);
             mDate = new Date(jsonObject.getLong(JSON_DATE));
@@ -81,8 +82,8 @@ public class Crime {
     public Photo getPhoto() { return mPhoto; }
     public void setPhoto(Photo photo) { this.mPhoto = photo; }
 
-    public String getSuspect() { return mSuspect; }
-    public void setSuspect(String suspect) { mSuspect = suspect; }
+    public Suspect getSuspect() { return mSuspect; }
+    public void setSuspect(Suspect suspect) { mSuspect = suspect; }
 
     // return crime's date in "Day of Week, Month day, year" format
     public CharSequence getDateAsString() {
@@ -103,7 +104,8 @@ public class Crime {
         jsonObject.put(JSON_DATE, this.mDate.getTime());
         if ( mPhoto != null )
             jsonObject.put(JSON_PHOTO, mPhoto.toJSON());
-        jsonObject.put(JSON_SUSPECT, mSuspect);
+        if ( mSuspect != null )
+            jsonObject.put(JSON_SUSPECT, mSuspect.toJSON());
         return jsonObject;
     }
 
