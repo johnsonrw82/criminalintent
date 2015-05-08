@@ -1,6 +1,7 @@
 package com.jrw82.android.criminalintent;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
@@ -25,6 +26,26 @@ public class CrimeListFragment extends ListFragment {
     private boolean mSubtitleVisible;
 
     private ArrayList<Crime> mCrimes;
+    private Callbacks mCallbacks;
+
+    /**
+     * Required interface for hosting activities
+     */
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks)activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,17 +182,14 @@ public class CrimeListFragment extends ListFragment {
         Crime c = ((CrimeAdapter)getListAdapter()).getItem(position);
         Log.d(TAG, c.getTitle() + " clicked");
 
-        // create a new Intent, that will be used to start the new activity
-        Intent i = new Intent(getActivity(), CrimePagerActivity.class);
-        // put the crime id as an extra
-        i.putExtra(CrimeFragment.CRIME_ID_EXTRA, c.getId());
-        startActivity(i);
+        // delegate to the hosting activity to process the event
+        mCallbacks.onCrimeSelected(c);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
+        updateUI();
     }
 
 
@@ -264,12 +282,15 @@ public class CrimeListFragment extends ListFragment {
         Crime crime = new Crime();
         // get crime lab instance
         CrimeLab.get(getActivity()).addCrime(crime);
-        // create a new intent
-        Intent i = new Intent(getActivity(), CrimePagerActivity.class);
-        // start the activity
-        startActivityForResult(i, 0);
+        // notify dataset changed
+        updateUI();
+        // use callback to handle event
+        mCallbacks.onCrimeSelected(crime);
     }
 
+    public void updateUI() {
+        ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
+    }
 
     private class CrimeAdapter extends ArrayAdapter<Crime> {
         public CrimeAdapter(ArrayList<Crime> crimes) {

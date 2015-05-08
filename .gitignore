@@ -12,3 +12,4 @@ modules.xml
 target
 /CriminalIntent-it/*.iml
 /.idea/uiDesigner.xml
+gen-external-apklibs

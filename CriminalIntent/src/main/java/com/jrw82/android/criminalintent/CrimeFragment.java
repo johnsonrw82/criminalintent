@@ -51,7 +51,11 @@ public class CrimeFragment extends Fragment {
     private ImageView mPhotoView;
     private Button mSuspectButton;
     private Button mCallSuspectButton;
+    private Callbacks mCallbacks;
 
+    public interface Callbacks {
+        void onCrimeUpdated(Crime crime);
+    }
 
     private DialogInterface.OnClickListener mDeletePhotoDialogListener = new DialogInterface.OnClickListener() {
         @Override
@@ -77,6 +81,18 @@ public class CrimeFragment extends Fragment {
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks)activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     @Override
@@ -116,6 +132,8 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                mCallbacks.onCrimeUpdated(mCrime);
+                getActivity().setTitle(mCrime.getTitle());
             }
 
             @Override
@@ -226,6 +244,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+                mCallbacks.onCrimeUpdated(mCrime);
             }
         });
 
@@ -327,6 +346,7 @@ public class CrimeFragment extends Fragment {
                 mCrime.setDate(d);
                 // update the date display
                 updateDate();
+                mCallbacks.onCrimeUpdated(mCrime); // report those changes!
             }
             if ( requestCode == REQUEST_CHOICE ) {
                 boolean setDate = intent.getBooleanExtra(DateTimeDialogChoiceFragment.EXTRA_CHOICE, true);
@@ -358,6 +378,7 @@ public class CrimeFragment extends Fragment {
                     mCrime.setPhoto(photo);
                     showPhoto();
                     Log.i(TAG, "Crime: " + mCrime.getTitle() + " has a photo");
+                    mCallbacks.onCrimeUpdated(mCrime); // report those changes!
                 }
             }
             if ( requestCode == REQUEST_CONTACT ) {
@@ -411,6 +432,7 @@ public class CrimeFragment extends Fragment {
                     mCallSuspectButton.setEnabled(true);
                 }
                 c.close();
+                mCallbacks.onCrimeUpdated(mCrime); // report those changes!
             }
         }
     }
